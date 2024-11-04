@@ -225,3 +225,13 @@ body.show-nav > .right-panels{
     display: block;
 }
 /* End Right Navbar */
+
+/* Custom table Style  */
+.table{
+    background-color: transparent;
+    
+}
+
+table#mytable th,table#mytable td{
+    background-color: transparent;
+}

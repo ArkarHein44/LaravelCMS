@@ -17,7 +17,7 @@
 
                                             <ul class="navbar-nav  pe-5 me-5">
                                                 <!-- notify  -->
-                                                <li class="nav-item dropdowns">
+                                         <!-- #endregion -->        <li class="nav-item dropdowns">
                                                     <a href="javascript:void(0);" class="nav-link dropbtns" onclick="dropbtn(event)">
                                                         <i class="fas fa-bell"></i>
                                                         <span class="badge bg-danger">5+</span>

@@ -46,6 +46,12 @@
             </div>
         </div>
         <!-- End Right Navbar  -->
+
+        <!-- START MODAL AREA  -->
+            <!-- Start Quicksearch Modal -->
+
+            <!-- End Quicksearch Modal -->
+        <!-- END MODAL AREA  -->
    
 
 

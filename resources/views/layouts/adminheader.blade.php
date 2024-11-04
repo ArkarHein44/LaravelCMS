@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>DLT Student Management App</title>
+        <title>{{config('app.name')}}</title>
         <!-- fav icon  -->
         <link href="{{asset('assets/img/fav/favicon.png')}}" rel="icon" type="image/png" sizes="16x16" />
         <!-- bootstrap css1 js1  -->
@@ -17,7 +17,7 @@
 
         <!-- extra css  -->
 
-        @yield('styles')
+        @yield('css')
 
     </head>
-    <body></body>
+    <body></body>   
