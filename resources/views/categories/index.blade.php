@@ -6,14 +6,23 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{ route('statuses.store') }}" method="POST">
+                <form action="{{ route('categories.store') }}" method="POST">
                     
-                    {{-- {{ csrf_field() }} --}}
-                    @csrf
+                    {{ csrf_field() }}
+                    
                     <div class="row align-items-end">
                         <div class="col-md-6 form-group">
-                            <label for="name">Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" placeholder="Enter Status Name" />
+                            <label for="name">Category<span class="text-danger">*</span></label>
+                            <input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" placeholder="Enter category" />
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label for="status_id">Status</label>
+                            <select name="status_id" id="status_id" class="form-control form-control-sm rounded-0">
+                                @foreach($statuses as $status)
+                                    <option value="{{$status['id']}}">{{$status['name']}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-6">
@@ -60,7 +69,8 @@
                                 <input type="checkbox" name="selectalls" id="selectalls" class="form-check-input selectalls" />
                             </th>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Staus</th>
                             <th>By</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -68,22 +78,23 @@
                        </tr>
                     </thead>
                     <tbody>
-                        @foreach ($statuses as $idx=>$status)
+                        @foreach ($categories as $idx=>$category)
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="singlechecks" class="form-check-input singlechecks" value="{{$status->id}}" />
+                                    <input type="checkbox" name="singlechecks" class="form-check-input singlechecks" value="{{$category->id}}" />
                                 </td>
                                 <td>{{ ++$idx }}</td>
-                                <td>{{ $status->name }}</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->status->name }}</td>
                                 <!-- <td>{{ $status->user['name'] }}</td> -->
-                                <td>{{ $status['user']['name'] }}</td>
-                                <td>{{ $status->created_at->format("d M Y") }}</td>
-                                <td>{{ $status->updated_at->format("d M Y ") }}</td>
+                                <td>{{ $category['user']['name'] }}</td>
+                                <td>{{ $category->created_at->format("d M Y") }}</td>
+                                <td>{{ $category->updated_at->format("d M Y ") }}</td>
                                 <td>
                                     <a href="javascript:void(0);" class="text-info"><i class="fas fa-pen"></i></a>
                                     <a href="javascript:void(0);" class="text-danger ms-2 delete-btn" data-idx="{{$idx}}"><i class="fas fa-trash-alt"></i></a>
 
-                                    <form id="formdelete-{{$idx}}" action="{{route('statuses.destroy',$status->id)}}" method="POST">
+                                    <form id="formdelete-{{$idx}}" action="{{route('categories.destroy',$category->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')  
 
@@ -103,7 +114,9 @@
 @section('css')
 @endsection
 
+
 @section('scripts')
+
     <script type="text/javascript">
 
         // Single Delete 
@@ -129,5 +142,7 @@
         })
         // Bulk Delete 
     </script>
+
+
 @endsection
         

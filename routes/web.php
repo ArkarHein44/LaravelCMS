@@ -3,6 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatusesController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\TypesController;
+use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\StagesController;
+use App\Http\Controllers\ReligionsController;
+use App\Http\Controllers\PaymenttypesController;
+use App\Http\Controllers\GendersController;
+use App\Http\Controllers\DaysController;
+use App\Http\Controllers\CategoriesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,10 +37,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('statuses',StatusesController::class);
+    Route::resource('/statuses',StatusesController::class);
+    Route::resource('/types',TypesController::class);
     Route::resource('/roles', RolesController::class);
+    Route::resource('/warehouses', WarehouseController::class);
+    Route::resource('/stages', StagesController::class);
+    Route::resource('/religions', ReligionsController::class);
+    Route::resource('/paymenttypes', PaymenttypesController::class);   
+    Route::resource('/genders', GendersController::class); 
+    Route::resource('/days', DaysController::class); 
+    Route::resource('/categories', CategoriesController::class); 
 });
-
+ 
 
 
 require __DIR__.'/auth.php';
