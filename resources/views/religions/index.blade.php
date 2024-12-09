@@ -13,6 +13,10 @@
                     <div class="row align-items-end">
                         <div class="col-md-4 form-group">
                             <label for="name">Name <span class="text-danger">*</span></label>
+                            @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+
                             <input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" placeholder="What is your Religion" />
                         </div>
 

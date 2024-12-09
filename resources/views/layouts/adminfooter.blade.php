@@ -45,34 +45,41 @@
                 <a href="javascript:void(0);"><i class="fas fa-square text-light shadow fa-lg"></i></a>
             </div>
         </div>
-        <!-- End Right Navbar  -->
-
-        <!-- START MODAL AREA  -->
-            <!-- Start Quicksearch Modal -->
-
-            <!-- End Quicksearch Modal -->
-        <!-- END MODAL AREA  -->
+       
    
 
 
         
-        <!-- bootstrap css1 js1  -->
+        {{-- bootstrap css1 js1   --}}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        <!-- jquery  -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
-        <!-- jquery ui css1 js1  -->
+
+        {{-- jquery js js1 --}}
+        <script src="{{asset('assets/libs/jquery-3.7.1.min.js')}}"></script>
+
+        {{-- jquery ui css1 js1 --}}
         <script src="./assets/libs/jquery-ui-1.13.2.custom/jquery-ui.min.js" type="text/javascript"></script>
-        <!-- google chart js1 -->
+
+        {{-- google chart js1 --}}
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <!-- chartjs js1  -->
+
+        {{-- chartjs js --}}
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <!-- Raphael must be included before justgage -->
+
+        {{-- Raphael must be included before justgage --}}
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+        
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
-        <!-- custom js js1 -->
+
+        {{-- custom js js1 --}}
         <script src="{{asset('assets/dist/js/app.js')}}" type="text/javascript"></script>
 
-        <!-- extra js  -->
+        {{-- toaster notification js js1 --}}
+        <script src="{{asset('assets\libs\toastr-master\build\toastr.min.js')}}"></script>
+
+        {{-- flatpickr  js js1 --}}
+        <script src="{{asset('assets\libs\flatpickr\flatpickr.min.js')}}"></script>
+
+        {{-- extra js --}}
         @yield('scripts')
         
     </body>

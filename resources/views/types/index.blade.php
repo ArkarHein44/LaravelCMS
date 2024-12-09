@@ -11,13 +11,19 @@
                     {{ csrf_field() }}
                     
                     <div class="row align-items-end">
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group mb-3">
                             <label for="name">Name <span class="text-danger">*</span></label>
+                            @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" placeholder="Enter Class Type" />
                         </div>
 
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group mb-3">
                             <label for="status_id">Status</label>
+                                @error('status_id')
+                                    <span class="text-danget">{{$message}}</span>
+                                @enderror
                             <select name="status_id" id="status_id" class="form-control form-control-sm rounded-0">
                                 @foreach($statuses as $status)
                                     <option value="{{$status['id']}}">{{$status['name']}}</option>
@@ -25,7 +31,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4 mb-3">
                             <button type="reset" class="btn btn-secondary btn-sm rounded-0">Cancel</button>
                             <button type="submit" class="btn btn-primary btn-sm rounded-0 ms-3">Submit</button>
                         </div>

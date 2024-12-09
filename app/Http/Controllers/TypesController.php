@@ -24,6 +24,11 @@ class TypesController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name'=>'required|max:50|unique:types,name',
+            'status_id'=>'required|in:3,4'
+        ]);
+
         $user = Auth::user();
         $user_id = $user->id;
 
@@ -51,6 +56,7 @@ class TypesController extends Controller
 
     public function update(Request $request, string $id)
     {
+
 
         $user = Auth::user();
         $user_id = $user->id;

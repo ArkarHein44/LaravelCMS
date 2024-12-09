@@ -16,6 +16,7 @@
                     <div class="col-md-2 mb-2">
                         <a href="javascript:void(0);" id="bulkdelete-btn" class="btn btn-danger btn-sm rounded-0">Bulk Delete</a>
                     </div>
+                    
                     <div class="col-md-10">
                         <form action="" method="">
                             <div class="row justify-content-end">
@@ -59,9 +60,9 @@
                                     <input type="checkbox" name="singlechecks" class="form-check-input singlechecks" value="{{$role->id}}" />
                                 </td>
                                 <td>{{ ++$idx }}</td>
+                                <td><img src="{{asset($role->image)}}" alt="" class="rounded-circle me-2" width="20px" height="20px" /><a href="{{route('roles.show',$role->id)}}">{{$role->name}}</a></td>
                                 <td>{{ $role->name }}</td>
-                                <td>{{ $role->status->name }}</td>
-                               
+                                <td>{{ $role->status->name }}</td>                               
                                 <td>{{ $role['user']['name'] }}</td>
                                 <td>{{ $role->created_at->format("d M Y") }}</td>
                                 <td>{{ $role->updated_at->format("d M Y ") }}</td>

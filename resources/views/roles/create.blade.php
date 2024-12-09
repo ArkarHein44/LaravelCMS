@@ -12,18 +12,27 @@
                     
                     <div class="row align-items-end">
 
-                        <div class="col-md-3 form-group">
+                        <div class="col-md-3 form-group mb-3">
                             <label for="image">Image</label>
+                            @error('image')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0"  />
                         </div> 
 
-                        <div class="col-md-3 form-group">
+                        <div class="col-md-3 form-group mb-3">
                             <label for="name">Name<span class="text-danger">*</span></label>
+                            @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" placeholder="Enter Role Name" />
                         </div>
 
-                        <div class="col-md-3 form-group">
+                        <div class="col-md-3 form-group mb-3">
                             <label for="status_id">Status</label>
+                            @error('status_id')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <select name="status_id" id="status_id" class="form-control form-control-sm rounded-0">
                                 @foreach($statuses as $status)
                                     <option value="{{$status['id']}}">{{$status['name']}}</option>
@@ -31,7 +40,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 mb-3">
                             <a href="{{route('roles.index')}}" class="btn btn-secondary btn-sm rounded-0">Cancel</a>
                             <button type="submit" class="btn btn-primary btn-sm rounded-0 ms-3">Submit</button>
                         </div>

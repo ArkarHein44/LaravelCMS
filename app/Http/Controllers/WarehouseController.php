@@ -25,6 +25,10 @@ class WarehouseController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name'=>'required'
+        ]);
+        
         $user = Auth::user();
         $user_id = $user->id;
 

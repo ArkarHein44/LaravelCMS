@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatusesController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\TagsController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\StagesController;
@@ -47,6 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('/genders', GendersController::class); 
     Route::resource('/days', DaysController::class); 
     Route::resource('/categories', CategoriesController::class); 
+    
+    Route::resource('/posts', PostsController::class); 
+    Route::resource('/leaves', LeavesController::class); 
+
+    Route::resource('/tags', TagsController::class); 
+
 });
  
 
