@@ -6,7 +6,7 @@
     <div class="container-fluid">
         
             <div class="col-md-12">
-                <a href="{{route('leaves.create')}}" class="btn btn-primary btn-sm rounded-0">Create</a>
+                <a href="{{route('posts.create')}}" class="btn btn-primary btn-sm rounded-0">Create</a>
             </div> 
 
             <hr />
@@ -45,7 +45,15 @@
                                 <input type="checkbox" name="selectalls" id="selectalls" class="form-check-input selectalls" />
                             </th>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Title</th>                            
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Fee</th>
+                            <th>Type</th>
+                            <th>Tag</th>
+                            <th>Att Form</th>
                             <th>Staus</th>
                             <th>By</th>
                             <th>Created At</th>
@@ -54,22 +62,31 @@
                        </tr>
                     </thead>
                     <tbody>
-                        @foreach ($leaves as $idx=>$leave)
+
+                        @foreach ($posts as $idx=>$post)
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="singlechecks" class="form-check-input singlechecks" value="{{$leave->id}}" />
+                                    <input type="checkbox" name="singlechecks" class="form-check-input singlechecks" value="{{$post->id}}" />
                                 </td>
                                 <td>{{ ++$idx }}</td>
-                                <td><a href="{{route('leaves.show',$leave->id)}}">{{$leave->name}}</a></td>
-                                <td>{{ $leave->stage->name }}</td>                               
-                                <td>{{ $leave['user']['name'] }}</td>
-                                <td>{{ $leave->created_at->format("d M Y") }}</td>
-                                <td>{{ $leave->updated_at->format("d M Y ") }}</td>
+                                <td><img src="{{asset($post->image)}}" alt="" class="rounded-circle me-2" width="20px" height="20px" /><a href="{{route('posts.show',$post->id)}}">{{$post->title}}</a></td>
+                                <td>{{$post->startdate}}</td>
+                                <td>{{$post->enddate}}</td>
+                                <td>{{$post->starttime}}</td>
+                                <td>{{$post->endtime}}</td>
+                                <td>{{$post->fee}}</td>                                
+                                <td>{{$post->type->name}}</td> 
+                                <td>{{$post->tag->name}}</td>    
+                                <td>{{$post->attshowStatus->name}}</td>      
+                                <td>{{$post->status->name}}</td>                   
+                                <td>{{ $post->user->name}}</td>
+                                <td>{{ $post->created_at->format("d M Y") }}</td>
+                                <td>{{ $post->updated_at->format("d M Y ") }}</td>
                                 <td>
-                                    <a href="{{route('leaves.edit',$leave->id)}}" class="text-info"><i class="fas fa-pen"></i></a>
+                                    <a href="{{route('posts.edit',$post->id)}}" class="text-info"><i class="fas fa-pen"></i></a>
                                     <a href="javascript:void(0);" class="text-danger ms-2 delete-btn" data-idx="{{$idx}}"><i class="fas fa-trash-alt"></i></a>
 
-                                    <form id="formdelete-{{$idx}}" action="{{route('leaves.destroy',$leave->id)}}" method="POST">
+                                    <form id="formdelete-{{$idx}}" action="{{route('posts.destroy',$post->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')  
 

@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\File;
 
 class RolesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $roles = Roles::all();
@@ -22,18 +20,13 @@ class RolesController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+  
     public function create()
     {
         $statuses = Status::whereIn('id',[3,4])->get();
         return view('roles.create',compact('statuses'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -70,9 +63,7 @@ class RolesController extends Controller
         return redirect(route('roles.index'));
     }
 
-    /**
-     * Display the specified resource.
-     */
+ 
     public function show(string $id)
     {
         $role = Roles::findOrFail($id);
@@ -80,9 +71,6 @@ class RolesController extends Controller
         
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $role = Roles::findOrFail($id);
@@ -90,9 +78,6 @@ class RolesController extends Controller
         return view('roles.edit')->with('role',$role)->with('statuses',$statuses);
     }
 
-    /**
-     * Update the specified resource in storage. 
-     */
     public function update(Request $request, string $id)
     {
         $user = Auth::user();
@@ -134,9 +119,7 @@ class RolesController extends Controller
         return redirect(route('roles.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+ 
     public function destroy(string $id)
     {
         $role = Roles::findOrFail($id);
