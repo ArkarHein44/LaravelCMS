@@ -13,16 +13,16 @@
                     
                     <div class="row align-items-end">
 
-                        <div class="col-md-3 form-group">
+                        <div class="col-md-3 form-group mb-3">
 
-                        <label for="image" class="gallery">
-                            @if($role->image)
-                                <img src="{{asset($role->image)}}" alt="{{$role->slug}}" class="img-thumbnail" width="100px" height="100px"/>
-                            @else
-                                <span>Choose Images</span>
-                            @endif
-                        </label>
-                            <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0"  hidden/>
+                            <label for="image" class="gallery">
+                                @if($role->image)
+                                    <img src="{{asset($role->image)}}" alt="{{$role->slug}}" class="img-thumbnail" width="100px" height="100px"/>
+                                @else
+                                    <span>Choose Images</span>
+                                @endif
+                            </label>
+                                <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0"  hidden/>
                         </div> 
 
                         <div class="col-md-3 form-group">

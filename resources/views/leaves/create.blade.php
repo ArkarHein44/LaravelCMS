@@ -15,9 +15,14 @@
                         <div class="col-md-4">
 
                             <div class="row">
+                                
                                 <div class="col-md-12 form-group mb-3">
-                                    <label for="image">Image<span class="text-danger">*</span></label>
-                                    <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0"  />
+
+                                    <label for="images" class="gallery">
+                                  
+                                        <span>Choose Images</span>
+                                    </label>
+                                        <input type="file" name="images[]" id="images" class="form-control form-control-sm rounded-0" multiple hidden/>
                                 </div> 
 
                                 <div class="col-md-6 form-group mb-3">
@@ -119,7 +124,38 @@
 {{-- flatpickr css  --}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+{{-- Start Gallery  --}}
+<style type="text/css">
+    .gallery{
+            width: 100%;
+            background-color: #eee;
+            color: #aaa;
 
+
+            text-align: center;
+
+            padding: 10px 0;
+        }
+
+        .gallery.removetext span{
+            display: none;
+
+        }
+
+        .gallery img{
+            width: 100px;
+            height: 100px;
+            border: 2px dashed #aaa;
+
+            border-radius: 10px;
+
+            object-fit: cover;
+
+            padding: 5px;
+            margin: 0 5px;
+        }
+</style>
+{{-- End Gallery  --}}
 @endsection
 
 
@@ -166,14 +202,56 @@
 
 
             });
-
+                      
+    </script>
 
     
+<script type="text/javascript">
 
-                
+        
+    $(document).ready(function(){
+        // 10pxStart Single Profile Preview
+
+        let Previewimages = function(input,output){
+            // console.log(input,output)
+
+            if(input.files){
+                let totalfiles = input.files.length;
+                //console.log(totalfiles);
+
+                if(totalfiles > 0){
+                    $(output).addClass("removetext");
+
+                }else{
+                    $(output).removeClass("removetext");
+                }
+
+                for(let x=0; x < totalfiles; x++){
+                    //console.log(x);
+
+                    let filereader = new FileReader();
+                    filereader.readAsDataURL(input.files[x]);
+
+                    filereader.onload = function(e){
+                        $(output).html("");
+                        $($.parseHTML("<img />")).attr("src",e.target.result).appendTo(output);
+
+                    }
+                }
+            }
+
+        }
+
+        $("#image").change(function(){
+
+            Previewimages(this,"label.gallery");
+        });
+
+        // End Single Profile Preview       
+        });
 
        
-    </script>
+</script>
 
 
 @endsection
