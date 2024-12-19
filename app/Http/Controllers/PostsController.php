@@ -27,8 +27,6 @@ class PostsController extends Controller
 
     public function create()
     {
-        
-        $gettoday = Carbon::today()->format('Y-m-d');
 
         $attshows = Status::whereIn('id',[3,4])->get();
         $days = Day::where('status_id',3)->get();
@@ -36,12 +34,32 @@ class PostsController extends Controller
         $tags = Tags::where('status_id',3)->get();
         $types = Types::whereIn('id',[1,2])->get();
 
-        return view('post.create',compact('attshows','days', 'statuses', 'tags', 'types', 'gettoday'));
+        $gettoday = Carbon::today()->format("Y-m-d");
+        $gettime = Carbon::now()->format("H:i");
+
+        return view('post.create',compact('attshows','days', 'statuses', 'tags', 'types', 'gettoday','gettime'));
 
     }
 
     public function store(Request $request)
     {
+        $this->validate($request,[
+            "image" => "image|mimes:jpg,jpeg,png|max:1024",
+            "title" => "required|max:50|unique:posts,title",
+            "content" => "required",
+            "fee" => "required|numeric",
+            "startdate" => "required",
+            "enddate" => "required",
+            "starttime" => "required",
+            "endtime" => "required",
+            "type_id" => "required|in:1,2",
+            "tag_id" => "required",
+            "attshow" => "required|in:3,4",
+            "status_id" => "required|in:7,10,11",   
+            "day_id"=>"required|array",
+            'day_id.*'=>"exists:days,id"
+        ]);
+
         $user = Auth::user();
         $user_id = $user['id'];
 
@@ -58,7 +76,7 @@ class PostsController extends Controller
         $post->tag_id = $request['tag_id'];
         $post->attshow = $request['attshow'];
         $post->status_id = $request['status_id'];
-        $post->user_id = $request['user_id'];
+        $post->user_id = $user_id;
 
         // Remove Old Single Upload 
        
@@ -87,7 +105,7 @@ class PostsController extends Controller
 
         $post->save();
 
-        return redirect(route('post.index'));
+        return redirect(route('posts.index'));
     }
 
 
@@ -99,12 +117,15 @@ class PostsController extends Controller
     public function edit(string $id)
     {
         $post = Post::findOrFail($id);
+        
+       
         $attshows = Status::whereIn('id',[3,4])->get();
+      
         $days = Day::where('status_id',3)->get();
         $statuses = Status::whereIn('id',[7,10,11])->get();
         $tags = Tags::where('status_id',3)->get();
         $types = Types::whereIn('id',[1,2])->get();
-        return view('posts.edit')->with('post',$post)->with('attshows',$attshows)->with('days',$days)->with('statuses',$statuses)->with('tags',$tags)->with('types', $types);
+        return view('post.edit')->with('post',$post)->with('attshows',$attshows)->with('days',$days)->with('statuses',$statuses)->with('tags',$tags)->with('types', $types);
     }
 
     public function update(Request $request, string $id)
@@ -125,7 +146,7 @@ class PostsController extends Controller
         $post->tag_id = $request['tag_id'];
         $post->attshow = $request['attshow'];
         $post->status_id = $request['status_id'];
-        $post->user_id = $request['user_id'];
+        $post->user_id = $user_id;
 
         // Remove Old Single Upload 
        
@@ -154,7 +175,7 @@ class PostsController extends Controller
 
         $post->save();
 
-        return redirect(route('post.index'));
+        return redirect(route('posts.index'));
     }
 
     /**

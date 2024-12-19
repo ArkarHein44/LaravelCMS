@@ -32,6 +32,7 @@
 								</div>
 
 								<div class="mb-3">
+
 									<div class="row g-0 mb-2">
 
 										<div class="col-auto">
@@ -55,6 +56,7 @@
 										</div>
 
 									</div>
+
 								</div>
 
                             </div>
@@ -62,7 +64,20 @@
                     </div>
 
 					<div class="col-md-8 col-lg-9">
+						<h6 class="">Compose</h6>
 
+						<div class="card border-0 rounded-0 shadow mb-4">
+							<div class="card-body">
+								<div class="accordion">
+		
+									<h1 class="acctitle active"><i class="fas fa-hand-point-right"></i> Why are you learning JavaScript?</h1>
+									<div class="acccontent">
+										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+									</div>					
+
+								</div>
+							</div>
+						</div>
 					</div>
 
                 </div>

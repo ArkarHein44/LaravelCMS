@@ -91,7 +91,10 @@
                                 </td>
                                 <td>{{ ++$idx }}</td>
                                 <td>{{$tag->name}}</td>   
-                                <td><i class="fas fa-toggle-{{$tag->status->slug}} fa-2x text-primary"></i></td>                       
+                                <td>
+                                    {{-- {{ $tag->status->name }} --}}
+                                    <i class="fas fa-toggle-{{$tag->status->slug}} fa-2x text-primary"></i>
+                                </td>                       
                                 <td>{{ $tag['user']['name'] }}</td>
                                 <td>{{ $tag->created_at->format("d M Y") }}</td>
                                 <td>{{ $tag->updated_at->format("d M Y ") }}</td>
