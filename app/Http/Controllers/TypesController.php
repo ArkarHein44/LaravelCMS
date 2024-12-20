@@ -40,6 +40,7 @@ class TypesController extends Controller
 
         $type->save();
 
+        session()->flash("success", "New Type Created");
         return redirect(route('types.index'));
     }
 
@@ -69,6 +70,7 @@ class TypesController extends Controller
 
         $type->save();
 
+        session()->flash("success", "Update Successfully");
         return redirect(route('types.index'));
 
     }
@@ -78,6 +80,7 @@ class TypesController extends Controller
         $type = Types::findOrFail($id);
         $type->delete();
 
+        session()->flash("danger", "Delete Successfully"); 
         return redirect()->back();
     }
 }

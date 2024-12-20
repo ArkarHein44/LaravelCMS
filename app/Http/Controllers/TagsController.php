@@ -48,6 +48,7 @@ class TagsController extends Controller
 
         $tags->save();
 
+        session()->flash("success", "New Tag Created");
         return redirect(route('tags.index'));
     }
 
@@ -72,7 +73,25 @@ class TagsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|unique:tags,name',
+            
+        ]);
+        
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $tags = new Tags();
+        $tags->name = $request['name'];
+        $tags->slug = Str::slug($request['name']);
+        $tags->status_id = $request['status_id'];
+        $tags->user_id = $user_id;
+        
+        $tags->save();
+        
+        session()->flash("success", "Update Successfully");
+        return redirect(route('statuses.index'));
     }
 
     /**
@@ -83,6 +102,7 @@ class TagsController extends Controller
         $tags = Tags::findOrFail($id);
         $tags->delete();
 
+        session()->flash("danger", "Delete Successfully"); 
         return redirect()->back();
     }
 }

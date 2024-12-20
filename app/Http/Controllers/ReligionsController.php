@@ -40,6 +40,7 @@ class ReligionsController extends Controller
 
         $religions->save();
 
+        session()->flash("success", "New relogion Created");
         return redirect(route('religions.index'));
     }
 
@@ -68,6 +69,7 @@ class ReligionsController extends Controller
 
         $religions->save();
 
+        session()->flash("success", "Update Successfully");
         return redirect(route('religions.index'));
 
     }
@@ -77,6 +79,7 @@ class ReligionsController extends Controller
         $religions = Religion::findOrFail($id);
         $religions->delete();
 
+        session()->flash("danger", "Delete Successfully"); 
         return redirect()->back();
     }
 }

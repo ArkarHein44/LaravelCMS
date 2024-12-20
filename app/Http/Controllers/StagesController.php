@@ -39,7 +39,8 @@ class StagesController extends Controller
         $stages->user_id = $user_id;
 
         $stages->save();
-
+        
+        session()->flash("success", "New Stage Created");
         return redirect(route('stages.index'));
     }
 
@@ -68,6 +69,7 @@ class StagesController extends Controller
 
         $stages->save();
 
+        session()->flash("success", "Update Successfully");
         return redirect(route('stages.index'));
 
     }
@@ -77,6 +79,7 @@ class StagesController extends Controller
         $stages = stages::findOrFail($id);
         $stages->delete();
 
+        session()->flash("danger", "Delete Successfully"); 
         return redirect()->back();
     }
 }

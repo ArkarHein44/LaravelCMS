@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\Leave;
+use App\Models\LeaveFile;
 use App\Models\Post;
 use App\Models\Tags;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class LeavesController extends Controller
 {
@@ -69,6 +71,30 @@ class LeavesController extends Controller
 
         $leave->save();
 
+        // Multi Images Upload 
+        if($request->hasFile('images')){
+            foreach($request->file('images') as $image){
+
+                $leavefile = new Leave();
+                $leavefile->leave_id = $leave->id;
+              
+                $file = $image;
+                // dd($file);
+                $fname = $file->getClientOriginalName();
+                // dd($fname);
+                $imagenewname = uniqid($user_id).$leave['id'].$fname;
+                // dd($imagenewname);
+                $file->move(public_path('assets/img/leaves/'),$imagenewname);
+    
+                $filepath = 'assets/img/leaves/'.$imagenewname;
+                $leavefile->image = $filepath;
+               
+                $leavefile->save();
+            }
+        }
+
+        session()->flash("success", "New Leave Created");
+
         return redirect(route('leaves.index'));
 
     }
@@ -127,6 +153,44 @@ class LeavesController extends Controller
         $leave->content = $request['content'];
 
         $leave->save();
+
+        $leavefiles = LeaveFile::where('leave_id',$leave->id)->get();
+       
+        if($request->hasFile('images')){
+
+            // Remove Old Multi Upload
+             
+            foreach($leavefiles as $leavefile){
+                $path = $leavefile->image;
+                if(File::exists($path)){
+                    FIle::delete($path);
+                }
+            }          
+            
+        } 
+
+      
+        // Multi Images Upload 
+        foreach($request->file('images') as $image){
+
+            $leavefile = new Leave();
+            $leavefile->leave_id = $leave->id;
+              
+            $file = $image;
+            // dd($file);
+            $fname = $file->getClientOriginalName();
+                // dd($fname);
+            $imagenewname = uniqid($user_id).$leave['id'].$fname;
+                // dd($imagenewname);
+            $file->move(public_path('assets/img/leaves/'),$imagenewname);
+    
+            $filepath = 'assets/img/leaves/'.$imagenewname;
+            $leavefile->image = $filepath;
+               
+            $leavefile->save();
+        }
+
+        session()->flash("success", "Update Successfully");
         return redirect(route('leaves.index'));
     }
 
@@ -136,8 +200,19 @@ class LeavesController extends Controller
     public function destroy(string $id)
     {
         $leave = Leave::findOrFail($id);
+        $leavefiles = LeaveFile::where('leave_id',$id)->get();
+
+        // Remove Old multi images 
+        foreach($leavefiles as $leavefile){
+            $path = $leavefile->image;
+            if(File::exists($path)){
+                FIle::delete($path);
+            }
+        }     
+
         $leave->delete();
 
+        session()->flash("danger", "Delete Successfully");
         return redirect()->back();
     }
 }

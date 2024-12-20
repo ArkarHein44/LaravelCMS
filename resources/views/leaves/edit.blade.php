@@ -25,7 +25,7 @@
                                         <span>Choose Images</span>
                                     @endif
                                 </label>
-                                <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0"  hidden/>
+                                <input type="file" name="images[]" id="images" class="form-control form-control-sm rounded-0" multiple hidden/>
                             </div> 
 
                             <div class="col-md-6 form-group mb-3">
@@ -139,35 +139,71 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 
     <script type="text/javascript">
+       
+        $(document).ready(function(){
 
-        
-            $(document).ready(function(){
-                
-                $('#post_id').select2({
-                    placeholder:"Choose class"
-                });
+            // Start Multi Profile Preview
+            let Previewimages = function(input,output){
+                // console.log(input,output)
 
-                $('#tag').select2({
-                    placeholder:"Choose authorize person"
-                });
+                if(input.files){
+                    let totalfiles = input.files.length;
+                    //console.log(totalfiles);
 
-                $('#content').summernote({
-                    placeholder:'Say Something...',
-                    height: 120,
-                    toolbar: [
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link']],
-                    ]
-                });
+                    if(totalfiles > 0){
+                        $(output).addClass("removetext");
 
-                $("#startdate,#enddate").flatpickr({
-                    dateFormat: "Y-m-d",
-                    minDate: "today",
-                    maxDate: new Date().fp_incr(30)
-                });
+                    }else{
+                        $(output).removeClass("removetext");
+                    }
+
+                    for(let x=0; x < totalfiles; x++){
+                        //console.log(x);
+
+                        let filereader = new FileReader();
+                        filereader.readAsDataURL(input.files[x]);
+
+                        filereader.onload = function(e){
+                            // $(output).html("");
+                            $($.parseHTML("<img />")).attr("src",e.target.result).appendTo(output);
+
+                        }
+                    }
+                }
+
+            }
+
+            $("#images").change(function(){
+
+                Previewimages(this,"label.gallery");
             });
+            // End Multi Profile Preview
+                
+            $('#post_id').select2({
+                placeholder:"Choose class"
+            });
+
+            $('#tag').select2({
+                placeholder:"Choose authorize person"
+            });
+
+            $('#content').summernote({
+                placeholder:'Say Something...',
+                height: 120,
+                toolbar: [
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link']],
+                ]
+            });
+
+            $("#startdate,#enddate").flatpickr({
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                maxDate: new Date().fp_incr(30)
+            });
+         });
 
                 
 

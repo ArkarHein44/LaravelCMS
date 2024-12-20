@@ -105,6 +105,7 @@ class PostsController extends Controller
 
         $post->save();
 
+        session()->flash("success", "New Post Created");
         return redirect(route('posts.index'));
     }
 
@@ -175,6 +176,7 @@ class PostsController extends Controller
 
         $post->save();
 
+        session()->flash("success", "Update Successfully");
         return redirect(route('posts.index'));
     }
 
@@ -192,6 +194,8 @@ class PostsController extends Controller
         }
 
         $post->delete();
+
+        session()->flash("danger", "Delete Successfully");
         return redirect()->back();
     }
 }

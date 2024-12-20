@@ -60,6 +60,7 @@ class RolesController extends Controller
 
         $role->save();
 
+        session()->flash("success", "New Role Created");
         return redirect(route('roles.index'));
     }
 
@@ -116,6 +117,7 @@ class RolesController extends Controller
 
         $role->save();
 
+        session()->flash("success", "Update Successfully");
         return redirect(route('roles.index'));
     }
 
@@ -132,6 +134,7 @@ class RolesController extends Controller
 
         $role->delete();
         
+        session()->flash("danger", "Delete Successfully"); 
         return redirect()->back();
 
     }

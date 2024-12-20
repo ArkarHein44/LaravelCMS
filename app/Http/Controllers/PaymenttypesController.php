@@ -40,6 +40,7 @@ class PaymenttypesController extends Controller
 
         $paymenttypes->save();
 
+        session()->flash("success", "New Payment Type Created");
         return redirect(route('paymenttypes.index'));
     }
 
@@ -68,6 +69,7 @@ class PaymenttypesController extends Controller
 
         $paymenttypes->save();
 
+        session()->flash("success", "Update Successfully");
         return redirect(route('paymenttypes.index'));
 
     }
@@ -77,6 +79,7 @@ class PaymenttypesController extends Controller
         $paymenttypes = Paymenttype::findOrFail($id);
         $paymenttypes->delete();
 
+        session()->flash("danger", "Delete Successfully");
         return redirect()->back();
     }
 }

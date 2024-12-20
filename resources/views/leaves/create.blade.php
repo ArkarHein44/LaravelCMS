@@ -233,7 +233,7 @@
                     filereader.readAsDataURL(input.files[x]);
 
                     filereader.onload = function(e){
-                        $(output).html("");
+                        // $(output).html("");
                         $($.parseHTML("<img />")).attr("src",e.target.result).appendTo(output);
 
                     }
@@ -242,13 +242,13 @@
 
         }
 
-        $("#image").change(function(){
+        $("#images").change(function(){
 
             Previewimages(this,"label.gallery");
         });
 
         // End Single Profile Preview       
-        });
+    });
 
        
 </script>
