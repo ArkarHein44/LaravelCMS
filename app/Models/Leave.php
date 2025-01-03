@@ -64,4 +64,8 @@ class Leave extends Model
         $posts = Post::whereIn('id',$postids)->pluck('title','id');
         return $posts;
     }
+
+    public function isconverted(){
+        return $this->stage_id !=2; // 2 = panding
+    }
 }

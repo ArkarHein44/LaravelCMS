@@ -20,6 +20,27 @@
                 <div class="col-lg-10 col-md-9 pt-md-5 mt-md-3 ms-auto">
                     <!-- start inner content area  -->
                     <div class="row">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{session('success')}}
+                            </div>
+                        @endif
+
+                        @if(session('info'))
+                            <div class="alert alert-info">
+                                {{session('info')}}
+                            </div>
+                        @endif
+
+                        @if($errors)
+                            @foreach($errors->all() as $error)
+                                <div class="alert alert-danger">
+                                    {{$error}}
+                                </div>
+                            @endforeach                        
+                        @endif
+
+
                         <!-- start breadcrumb -->
                         <nav class="">
                             <ol class="breadcrumb">

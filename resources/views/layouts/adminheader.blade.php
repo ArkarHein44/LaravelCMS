@@ -23,8 +23,8 @@
         <link href="{{asset('assets/toastr-master/build/toastr.min.css')}}" rel="stylesheet" type="text/css" />
         
         {{-- flatpickr css --}}
-        <link href="{{asset('assets/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
-        
+        <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+       
 
         @yield('css')
 

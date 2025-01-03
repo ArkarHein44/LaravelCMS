@@ -115,6 +115,104 @@
 							</div>
 						</div>
 
+						<h6 class="px-2">Additional Info</h6>
+                    	<div class="card border-0 rounded-0 shadow mb-4 p-3">
+
+							<ul class="nav">
+								<li class="nav-item">
+									<button type="button" id="autoclick" class="tablinks active" onclick="gettab(event,'contenttab')">Content</button>
+									<button type="button" class="tablinks" onclick="gettab(event,'leavestab')">Leaves</button>
+								</li>
+							</ul>
+
+							<div class="tab-content">
+
+								<div id="contenttab" class="tab-panel">
+
+									<p>{!! $leave->content !!}</p>
+
+									@if(!empty($leavefiles) && $leavefiles->count() > 0)
+											@foreach($leavefiles as $leavefile)
+												<a href="{{asset($leavefile->image)}}" data-lightbox="image" data-title="{{$leave->title}}">
+													<img src="{{asset($leavefile->image)}}" alt="{{$leavefile->id}}" class="img-thumbnail" width="100" height="100" />
+												</a>
+											@endforeach                                        
+										@else
+											<span>No Files</span>
+									@endif
+									
+								</div>					
+										
+
+							</div>
+
+							<div class="tab-content">
+								<div id="leavestab" class="tab-panel">
+									<table id="mytable" class="table table-sm table-hover border">
+										<thead>
+										   <tr>
+												<th>No</th>
+												<th>Title</th>
+												<th>Tag</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Staus</th>
+												<th>By</th>
+												<th>Created At</th>
+												<th>Updated At</th>												
+										   </tr>
+										</thead>
+										<tbody>
+					
+											@foreach ($allleaves as $idx=>$allleave)
+												<tr>													
+													<td>{{ ++$idx }}</td>
+													<td><a href="{{ route('leaves.show',$allleave->id)}}">{{Str::limit($allleave->title,20) }}</a></td>
+													<td>{{ $allleave->maptagtonames($users) }}</td>
+													<td>{{ $allleave->startdate }}</td>
+													<td>{{ $allleave->enddate }}</td>
+													<td>{{ $allleave->stage->name }}</td>                              
+													<td>{{ $allleave['user']['name'] }}</td>
+													<td>{{ $allleave->created_at->format("d M Y") }}</td>
+													<td>{{ $allleave->updated_at->format("d M Y") }}</td>
+													
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<hr />
+							<h6>Control Session</h6>
+							
+
+							<form action="{{ route('leaves.updatestage') }}" method="POST" >
+                    
+								@csrf
+								@method('PUT')
+			
+								<div class="row">
+			
+									<div class="col-md-3 form-group mb-3">
+										<select name="stage_id" id="stage_id" class="form-select form-select-sm rounded-0" >
+											@foreach($stages as $stage)
+											<option value="{{$stage->id}}" {{$leave->stage_id == $stage->id ? 'selected':''}} >{{$stage->name}}</option>
+											@endforeach
+										</select>										
+									</div>
+
+									<div class="col-md-3 d-flex justify-content-end align-items-center mb-3">
+										<button type="submit" class="btn btn-primary btn-sm rounded-0">Update</button>
+									</div>
+			
+								</div>
+								
+							</form>
+
+						</div>
+					</div>
+
 					</div>
 
                 </div>
@@ -126,6 +224,8 @@
 @endsection
 
 @section('css')
+
+	<link rel="stylesheet" href="{{asset('assets/libs/lightbox2-dev/dist/css/lightbox.min.css')}}">
 
 	<style type="text/css">
 	/* Start Accordion */
@@ -153,27 +253,6 @@
 			background-color: steelblue;
 		}
 
-		.acctitle::after{
-			content: "\f067"; /* + */
-			font-family: "Font Awesome 5 Free";
-
-			/*position: absolute;
-			right: 15px;
-			top: 50%;
-
-			transform: translateY(-50%);*/
-
-			float: right;
-		}
-
-		/*.active.acctitle::after{
-			content: "\f068";
-		}
-		*/
-		.active::after{
-			content: "\f068";
-		}
-
 		.acccontent{
 			height: 0;
 			background-color: #f4f4f4;
@@ -188,13 +267,52 @@
 			transition: height .3s ease-in-out;
 		}
 	/* End Accordion */
+
+
+	/* Start Tab  */
+	.nav{
+	display: flex;
+	
+	padding: 0;
+	margin: 0;
+	}
+
+	.nav .nav-item{
+		list-style-type: none;
+	}
+
+	.nav .tablinks{
+		font-size: 16px;
+		border: none;
+		padding: 15px 20px;
+		cursor: pointer;
+
+	}
+
+	.nav .tablinks:hover{
+		background-color: #f3f3f3;
+	}
+
+	.nav .tablinks.active{
+		color: blue;
+	}
+
+	.tab-pane{
+		/* border: 1px solid #ccc; */
+		/* border-top: 0; */
+
+		padding: 5px 15px;
+
+		display: none;
+	}
+	/* End Tab  */
 	</style>
 
 @endsection
 
 
 @section('scripts')
-
+<script src="{{asset('assets/libs/lightbox2-dev/dist/js/lightbox.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
 	// Accordion
 	var getacctitles = document.getElementsByClassName("acctitle");
@@ -229,6 +347,49 @@
 
 	}
 	// End Accordion
+
+	// Start Tab 
+
+	let gettatlinks = document.getElementsByClassName('tablinks'),
+            gettabpanels = document.getElementsByClassName('tab-panel');
+
+            let tabpanels = Array.from (gettabpanels);
+            
+            function gettab(evn,link){
+
+                // Remove All active 
+
+                for(let x=0; x < gettatlinks.length ; x++){
+
+                    // console.log(x); // 0 to 3
+
+                    gettatlinks[x].className = gettatlinks[x].className.replace(' active','');
+
+                }
+
+                // Add sigle active
+                evn.target.classList.add('active');
+
+                
+                // Hide All Panel 
+                tabpanels.forEach(function(tabpanel){
+                    tabpanel.style.display = "none";
+                });
+
+                // Show single Panel
+                document.getElementById(link).style.display = "block";
+
+            }
+
+            document.getElementById('autoclick').click();
+        // End Tab
+
+
+        lightbox.option({
+            'resizeDuration': 100,
+            'wrapAround': true
+        });
+
     </script>
 @endsection
         

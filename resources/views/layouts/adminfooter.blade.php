@@ -79,6 +79,27 @@
         {{-- flatpickr  js js1 --}}
         <script src="{{asset('assets\libs\flatpickr\flatpickr.min.js')}}"></script>
 
+        
+            @if(Session::has('success'))
+                <script>toastr.success("{{session()->get('success')}}", 'Successful')</script>               
+            @endif
+
+            @if(Session::has('info'))
+                <script>toastr.info("{{session()->get('info')}}", 'Information')</script>               
+            @endif
+
+            @if(Session::has('error'))
+                <script>toastr.error("{{session()->get('error')}}", 'Inconceivable')</script>               
+            @endif
+
+            @if($errors)
+                @foreach($errors->all() as $error)
+                    <script>toastr.error("{{$error}}", 'Warning', {timeOut: 3000})</script>   
+                @endforeach                        
+            @endif
+
+        
+
         {{-- extra js --}}
         @yield('scripts')
         

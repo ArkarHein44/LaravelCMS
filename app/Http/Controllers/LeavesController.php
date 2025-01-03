@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\LeaveTagPersonNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -10,7 +11,10 @@ use App\Models\LeaveFile;
 use App\Models\Post;
 use App\Models\Tags;
 use App\Models\User;
+use App\Models\stages;
 use Illuminate\Support\Facades\File;
+use App\Http\Requests\LeaveRequest;
+use Notification;
 
 class LeavesController extends Controller
 {
@@ -40,22 +44,8 @@ class LeavesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LeaveRequest $request)
     {
-        $this->validate($request,[
-
-            // post_id က မဖြစ်မနေလိုအပ်တယ် | array ဖြစ်ရမယ် 
-            'post_id'=>'required|array',
-
-            // post_id က database ထည်းက မှာ ရှိတဲ့ data ကိုပဲလက်ခံမယ် 
-            'post_id.*'=>'exists:posts,id',
-            'startdate'=>'required|date',
-            'enddate'=>'required|date|after_or_equal:startdate',
-            'tag'=>'required|array',
-            'tag*'=>'exists:users,id',
-            'title'=>'required|max:100',
-            'content'=>'required'
-        ]);
 
         $user = Auth::user();
         $user_id = $user->id;
@@ -75,7 +65,7 @@ class LeavesController extends Controller
         if($request->hasFile('images')){
             foreach($request->file('images') as $image){
 
-                $leavefile = new Leave();
+                $leavefile = new LeaveFile();
                 $leavefile->leave_id = $leave->id;
               
                 $file = $image;
@@ -93,6 +83,11 @@ class LeavesController extends Controller
             }
         }
 
+        // => Database Notification to multi tag users 
+        $tags = $request['tag'];
+        $tagpersons = User::whereIn('id', $tags)->get(); // fetch all users at once
+        Notification::send($tagpersons, new LeaveTagPersonNotification($leave->id, $leave->title, $leave->user_id));
+
         session()->flash("success", "New Leave Created");
 
         return redirect(route('leaves.index'));
@@ -105,8 +100,12 @@ class LeavesController extends Controller
     public function show(string $id)
     {
         $leave = Leave::findOrFail($id);
+        $leavefiles = LeaveFile::where("leave_id",$id)->get(); // load all associated images
         $users = User::pluck('name','id');
-        return view('leaves.show',["leave"=>$leave], ["users"=>$users]);
+        $stages = Stages::whereIn('id',[1,2,3])->where('status_id', 3)->get();
+        $allleaves = Leave::where('user_id', $leave->user_id)->orderBy('created_at', 'desc')->get();
+       
+        return view('leaves.show',["leave"=>$leave,"leavefiles"=>$leavefiles, "users"=>$users, "stages"=>$stages, "allleaves"=>$allleaves]);
     }
 
     /**
@@ -115,6 +114,7 @@ class LeavesController extends Controller
     public function edit(string $id)
     {
         $data['leaves'] = Leave::findOrFail($id);
+        $data['leavefiles'] = LeaveFile::where("leave_id",$id)->get(); // load all associated images
         $data['posts'] = Post::where('attshow',3)->orderBy('title','asc')->get()->pluck('title','id');
         $data['tags'] = User::orderBy('name','asc')->get()->pluck('name','id');
 
@@ -124,22 +124,8 @@ class LeavesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(LeaveRequest $request, string $id)
     {
-        $this->validate($request,[
-
-            // post_id က မဖြစ်မနေလိုအပ်တယ် | array ဖြစ်ရမယ် 
-            'post_id'=>'required|array',
-
-            // post_id က database ထည်းက မှာ ရှိတဲ့ data ကိုပဲလက်ခံမယ် 
-            'post_id.*'=>'exists:posts,id',
-            'startdate'=>'required|date',
-            'enddate'=>'required|date|after_or_equal:startdate',
-            'tag'=>'required|array',
-            'tag*'=>'exists:users,id',
-            'title'=>'required|max:100',
-            'content'=>'required'
-        ]);
 
         $user = Auth::user();
         $user_id = $user->id;
@@ -152,18 +138,29 @@ class LeavesController extends Controller
         $leave->title = $request['title'];
         $leave->content = $request['content'];
 
+        if($leave->isconverted()){
+            return redirect()->back()->with('error', "Already been converted to an authorize stage. Editing is disabled.");
+        }
+
         $leave->save();
 
         $leavefiles = LeaveFile::where('leave_id',$leave->id)->get();
+
+        // Delete associated records from the database
+        LeaveFile::where('leave_id',$leave->id)->delete();
        
         if($request->hasFile('images')){
 
             // Remove Old Multi Upload
              
             foreach($leavefiles as $leavefile){
+
                 $path = $leavefile->image;
+
                 if(File::exists($path)){
+
                     FIle::delete($path);
+
                 }
             }          
             
@@ -202,17 +199,36 @@ class LeavesController extends Controller
         $leave = Leave::findOrFail($id);
         $leavefiles = LeaveFile::where('leave_id',$id)->get();
 
+        if($leave->isconverted()){
+            return redirect()->back()->with('error', "Already been converted to an authorize stage. Delete is disabled.");
+        }
+
         // Remove Old multi images 
         foreach($leavefiles as $leavefile){
+
             $path = $leavefile->image;
+
             if(File::exists($path)){
+
                 FIle::delete($path);
+
             }
         }     
+        // Delete associated records from the database
+        LeaveFile::where('leave_id',$leave->id)->delete();
 
         $leave->delete();
 
         session()->flash("danger", "Delete Successfully");
+        return redirect()->back();
+    }
+
+    public function updatestage(Request $request, $id){
+        $leave = Leave::findOrFail($id);
+        $leave->stage_id = $request->stage_id;
+        $leave->save();
+
+        session()->flash("info", "Changed Stage");
         return redirect()->back();
     }
 }

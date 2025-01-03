@@ -19,11 +19,20 @@
 
                             <div class="col-md-12 form-group mb-3">
                                 <label for="image" class="gallery">
-                                    @if($leaves->image)
+                                    @if(!empty($leavefiles && $leavefiles->count() > 0))
+                                        @foreach($leavefiles as $leavefile)
+                                            <img src="{{asset($leavefile->image)}}" alt="{{$leavefile->id}}" class="img-thumbnail" width="100" height="100">
+                                        @endforeach
+                                    @else
+                                        <span>No File</span>
+
+                                    @endif
+
+                                    {{-- @if($leaves->image)
                                         <img src="{{asset($leaves->image)}}" alt="{{$leaves->slug}}" class="img-thumbnail" width="100px" height="100px"/>
                                     @else
                                         <span>Choose Images</span>
-                                    @endif
+                                    @endif --}}
                                 </label>
                                 <input type="file" name="images[]" id="images" class="form-control form-control-sm rounded-0" multiple hidden/>
                             </div> 

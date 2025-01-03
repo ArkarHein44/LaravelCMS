@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('/posts', PostsController::class); 
     Route::resource('/leaves', LeavesController::class); 
+    Route::put('/leaves.updatestage',[LeavesController::class, 'updatestage'])->name('leaves.updatestage');
 
     Route::resource('/tags', TagsController::class); 
 
