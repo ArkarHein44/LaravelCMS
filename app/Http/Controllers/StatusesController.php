@@ -77,7 +77,7 @@ class StatusesController extends Controller
         $status = Status::findOrFail($id);
         $status->delete();
 
-        session()->flash("danger", "Delete Successfully"); 
+        session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
     }
 }

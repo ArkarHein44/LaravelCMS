@@ -3,8 +3,7 @@
 @section('content')
     
     {{-- Start Page Content Area  --}}
-    <div class="container-fluid">
-        
+    <div class="container-fluid">        
             <div class="col-md-12">
 				<a href="javascript:void(0);" id="btn-back" class="btn btn-secondary btn-sm rounded-0">back</a>
                 <a href="{{route('leaves.index')}}" class="btn btn-secondary btn-sm rounded-0">Close</a>
@@ -13,19 +12,15 @@
             <hr />
 
             <div class="col-md-12">
-                <div class="row">
-                    
+                <div class="row">                    
                     
                     <div class="col-md-4 col-lg-3 mb-2">
 						<h6 class="text-primary">Info</h6>
                         <div class="card rounded-0 border-0 shadow">
-
                             <div class="card-body">
                                 
-								<div class="d-flex flex-column align-items-center mb-3">
-									
-									<div class="h6 mb-1">							{{$leave->title}}</div>
-
+								<div class="d-flex flex-column align-items-center mb-3">									
+									<div class="h6 mb-1">{{$leave->title}}</div>
 									<div class="text-muted">
 										<span class="">{{$leave['stage']['name']}}</span>
 									</div>
@@ -67,11 +62,9 @@
 						<h6 class="">Compose</h6>
 						<div class="card border-0 rounded-0 shadow mb-4">
 							<div class="card-body">
-								<div class="accordion">
-		
+								<div class="accordion">		
 									<h1 class="acctitle">E Mail</h1>
-									<div class="acccontent">
-										
+									<div class="acccontent">										
 										<div class="col-md-12 py-3">
 											<form action="" class="" method="POST">
 												@csrf
@@ -95,9 +88,7 @@
 												</div>
 											</form>
 										</div>
-
-									</div>					
-
+									</div>			
 								</div>
 							</div>
 						</div>
@@ -109,7 +100,7 @@
 								@foreach($leave->tagposts($leave->post_id) as $id=>$title)
 									<div class="border shadow p-3 enrollboxes">
 									<a href="{{route('posts.show',$id)}}" class="">{{$title}}</a>
-								</div>
+									</div>
 								@endforeach
 
 							</div>
@@ -181,43 +172,48 @@
 										</tbody>
 									</table>
 								</div>
-							</div>
-
-							<hr />
-							<h6>Control Session</h6>
-							
-
-							<form action="{{ route('leaves.updatestage') }}" method="POST" >
-                    
-								@csrf
-								@method('PUT')
-			
-								<div class="row">
-			
-									<div class="col-md-3 form-group mb-3">
-										<select name="stage_id" id="stage_id" class="form-select form-select-sm rounded-0" >
-											@foreach($stages as $stage)
-											<option value="{{$stage->id}}" {{$leave->stage_id == $stage->id ? 'selected':''}} >{{$stage->name}}</option>
-											@endforeach
-										</select>										
-									</div>
-
-									<div class="col-md-3 d-flex justify-content-end align-items-center mb-3">
-										<button type="submit" class="btn btn-primary btn-sm rounded-0">Update</button>
-									</div>
-			
-								</div>
-								
-							</form>
-
+							</div>		
 						</div>
+
+						<h6 class="px-2">AControl Session</h6>
+                    	<div class="card border-0 rounded-0 shadow mb-4 p-3">
+
+							<ul class="nav mb-3">
+								<li class="nav-item">
+									<button type="button" id="autoclick" class="tablinks" onclick="gettab(event,'authorizationtag')">Authorizatin</button>
+								</li>
+							</ul>
+
+							<div class="tab-content">
+								<div id="authorizationtag" class="tab-panel">
+									<form action="{{ route('leaves.updatestage',$leave->id) }}" method="POST" >				
+										@csrf
+										@method('PUT')					
+															
+										<div class="col-md-3 form-group mb-3">									
+											<select name="stage_id" id="stage_id" class="form-select form-select-sm rounded-0" >
+												@foreach($stages as $stage)
+												<option value="{{$stage->id}}" {{$leave->stage_id == $stage->id ? 'selected':''}} >{{$stage->name}}</option>
+												@endforeach
+											</select>								
+										</div>
+
+										<div class="col-md-3 d-flex justify-content-end">
+											<button type="submit" class="btn btn-primary btn-sm rounded-0 ms-3">Update</button>
+										</div>		
+																
+									</form>
+								</div>
+							</div>	
+
+						</div>							
+
+						
 					</div>
 
-					</div>
+				</div>
 
-                </div>
             </div>
-
     </div>
     {{-- end Page Content Area  --}}
 
@@ -294,7 +290,7 @@
 	}
 
 	.nav .tablinks.active{
-		color: blue;
+		color: white;
 	}
 
 	.tab-pane{

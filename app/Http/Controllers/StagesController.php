@@ -79,7 +79,7 @@ class StagesController extends Controller
         $stages = stages::findOrFail($id);
         $stages->delete();
 
-        session()->flash("danger", "Delete Successfully"); 
+        session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
     }
 }

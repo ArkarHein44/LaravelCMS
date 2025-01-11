@@ -102,7 +102,7 @@ class TagsController extends Controller
         $tags = Tags::findOrFail($id);
         $tags->delete();
 
-        session()->flash("danger", "Delete Successfully"); 
+        session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
     }
 }

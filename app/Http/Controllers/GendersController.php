@@ -79,7 +79,7 @@ class GendersController extends Controller
         $genders = Gender::findOrFail($id);
         $genders->delete();
 
-        session()->flash("danger", "Delete Successfully"); 
+        session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
     }
 }

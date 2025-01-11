@@ -57,7 +57,7 @@
         <script src="{{asset('assets/libs/jquery-3.7.1.min.js')}}"></script>
 
         {{-- jquery ui css1 js1 --}}
-        <script src="./assets/libs/jquery-ui-1.13.2.custom/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="{{asset('/assets/libs/jquery-ui-1.13.2.custom/jquery-ui.min.js')}}" type="text/javascript"></script>
 
         {{-- google chart js1 --}}
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

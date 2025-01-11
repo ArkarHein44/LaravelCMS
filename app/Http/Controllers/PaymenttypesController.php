@@ -79,7 +79,7 @@ class PaymenttypesController extends Controller
         $paymenttypes = Paymenttype::findOrFail($id);
         $paymenttypes->delete();
 
-        session()->flash("danger", "Delete Successfully");
+        session()->flash("error", "Delete Successfully");
         return redirect()->back();
     }
 }

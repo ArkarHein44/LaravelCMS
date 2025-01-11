@@ -37,7 +37,7 @@
 
                                     <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks" data-bs-toggle="collapse" data-bs-target="#article"><i class="fas fa-tachometer-alt fa-md me-3"></i> Articles <i class="fas fa-angle-left mores"></i></a>
                                         <ul id="article" class="collapse">
-                                            <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Post</a></li>
+                                            <li><a href="{{Route(name: 'posts.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Posts</a></li>
                                             <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Accouncement</a></li>
                                         </ul>
                                     </li>
@@ -72,9 +72,7 @@
 
                                             <li><a href="{{Route('paymenttypes.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Payment Types</a></li>
 
-                                            <li><a href="{{Route('stages.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Stages</a></li>
-
-                                            <li><a href="{{Route(name: 'posts.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Posts</a></li>
+                                            <li><a href="{{Route('stages.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Stages</a></li>                                            
 
                                             <li><a href="{{Route(name: 'tags.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Tags</a></li>
 

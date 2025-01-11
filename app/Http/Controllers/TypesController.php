@@ -80,7 +80,7 @@ class TypesController extends Controller
         $type = Types::findOrFail($id);
         $type->delete();
 
-        session()->flash("danger", "Delete Successfully"); 
+        session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
     }
 }

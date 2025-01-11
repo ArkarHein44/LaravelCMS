@@ -17,66 +17,66 @@
                                  <div class="col-md-12 mb-3">
 
                                       <div class="row">
-                                           <div class="col-md-6 text-sm-center">
-                                                <img src="{{asset($post->image)}}" width="200" alt="{{$post->title}}"/>
-                                           </div>
-                                           <div class="col-md-6">
-                                                <label for="image" class="gallery"><span>Choose Images</span></label>
-                                                <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0" value="{{ $post->image }}" hidden/>
-                                           </div>
+                                        <div class="col-md-6 text-sm-center">
+                                             <img src="{{asset($post->image)}}" width="200" alt="{{$post->title}}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                             <label for="image" class="gallery"><span>Choose Images</span></label>
+                                             <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0" value="{{ $post->image }}" hidden/>
+                                        </div>
                                       </div>
                                  </div>
 
                                  <div class="col-md-6 mb-3">
-                                      <label for="startdate">Start Date <span class="text-danger">*</span></label>
-                                      <input type="date" name="startdate" id="startdate" class="form-control form-control-sm rounded-0" value="{{ $post->startdate }}"/>
+                                   <label for="startdate">Start Date <span class="text-danger">*</span></label>
+                                   <input type="date" name="startdate" id="startdate" class="form-control form-control-sm rounded-0" value="{{ $post->startdate }}"/>
                                  </div>
 
                                  <div class="col-md-6 mb-3">
-                                      <label for="enddate">End Date <span class="text-danger">*</span></label>
-                                      <input type="date" name="enddate" id="enddate" class="form-control form-control-sm rounded-0" value="{{ $post->enddate }}"/>
+                                   <label for="enddate">End Date <span class="text-danger">*</span></label>
+                                   <input type="date" name="enddate" id="enddate" class="form-control form-control-sm rounded-0" value="{{ $post->enddate }}"/>
                                  </div>
 
                                  <div class="col-md-6 mb-3">
-                                      <label for="starttime">Start Time <span class="text-danger">*</span></label>
-                                      <input type="time" name="starttime" id="starttime" class="form-control form-control-sm rounded-0" value="{{ $post->starttime }}"/>
+                                   <label for="starttime">Start Time <span class="text-danger">*</span></label>
+                                   <input type="time" name="starttime" id="starttime" class="form-control form-control-sm rounded-0" value="{{ $post->starttime }}"/>
                                  </div>
 
                                  <div class="col-md-6 mb-3">
-                                      <label for="endtime">End Time <span class="text-danger">*</span></label>
-                                      <input type="time" name="endtime" id="endtime" class="form-control form-control-sm rounded-0" value="{{ $post->endtime }}"/>
+                                   <label for="endtime">End Time <span class="text-danger">*</span></label>
+                                   <input type="time" name="endtime" id="endtime" class="form-control form-control-sm rounded-0" value="{{ $post->endtime }}"/>
                                  </div>
 
                                  <div class="col-md-12 for-group">
-                                      <label for="">Days</label>
-                                      <div class="d-flex flex-wrap">
-                                           @foreach($days as $idx=>$day)
-                                                <div class="form-check form-switch mx-3">
-                                                     <input type="checkbox" name="day_id[]" id="day_id{{$idx}}" class="form-check-input dayactions" value="{{$day->id}}" 
-                                                          {{-- @foreach($dayables as $dayable)
-                                                               @if($dayable['id'] === $day['id'])
-                                                                    checked
-                                                               @endif
-                                                          @endforeach --}}
-                                                     /> 
-                                                     <label for="day_id{{$idx}}">{{$day->name}}</label>
-                                                </div>
-                                           @endforeach
+                                   <label for="">Days</label>
+                                   <div class="d-flex flex-wrap">
+                                        @foreach($days as $idx=>$day)
+                                             <div class="form-check form-switch mx-3">
+                                                  <input type="checkbox" name="day_id[]" id="day_id{{$idx}}" class="form-check-input dayactions" value="{{$day->id}}" 
+                                                       {{-- @foreach($dayables as $dayable)
+                                                            @if($dayable['id'] === $day['id'])
+                                                                 checked
+                                                            @endif
+                                                       @endforeach --}}
+                                                  /> 
+                                                  <label for="day_id{{$idx}}">{{$day->name}}</label>
+                                             </div>
+                                        @endforeach
 
-                                           {{-- @foreach($days as $idx=>$day)
-                                                <div class="form-check form-switch mx-3">
-                                                     <input type="checkbox" name="day_id[]" id="day_id{{$idx}}" class="form-check-input" value="{{$day->id}}" 
-                                                          {{ in_array($day->id,$post->days->pluck('id')->toArray()) ? 'checked' : '' }}
-                                                     /> 
-                                                     <label for="day_id{{$idx}}">{{$day->name}}</label>
-                                                </div>
-                                           @endforeach --}}
-                                      </div>
+                                        {{-- @foreach($days as $idx=>$day)
+                                             <div class="form-check form-switch mx-3">
+                                                  <input type="checkbox" name="day_id[]" id="day_id{{$idx}}" class="form-check-input" value="{{$day->id}}" 
+                                                       {{ in_array($day->id,$post->days->pluck('id')->toArray()) ? 'checked' : '' }}
+                                                  /> 
+                                                  <label for="day_id{{$idx}}">{{$day->name}}</label>
+                                             </div>
+                                        @endforeach --}}
+                                   </div>
 
-                                      <!-- start hidden field -->
-                                      <input type="hidden" name="dayable_type" id="dayable_type" value="App\Models\Post" />
-                                      <!-- end hidden field -->
-                                 </div>
+                                   <!-- start hidden field -->
+                                   <input type="hidden" name="dayable_type" id="dayable_type" value="App\Models\Post" />
+                                   <!-- end hidden field -->
+                              </div>
                             </div>
                             
                        </div>

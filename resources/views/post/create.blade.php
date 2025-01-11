@@ -25,34 +25,22 @@
                                 </div> 
 
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="startdate">Start Date<span class="text-danger">*</span></label>
-                                    @error('startdate')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
+                                    <label for="startdate">Start Date<span class="text-danger">*</span></label>                                    
                                     <input type="date" name="startdate" id="startdate" class="form-control form-control-sm rounded-0" value="{{old('startdate',$gettoday)}}"/>
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="enddate">End Date<span class="text-danger">*</span></label>
-                                    @error('enddate')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
+                                    <label for="enddate">End Date<span class="text-danger">*</span></label>                                    
                                     <input type="date" name="enddate" id="enddate" class="form-control form-control-sm rounded-0" value="{{old('startdate',now()->format('Y-m-d'))}}" />
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="starttime">Start Time<span class="text-danger">*</span></label>
-                                    @error('starttime')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
+                                    <label for="starttime">Start Time<span class="text-danger">*</span></label>                                    
                                     <input type="time" name="starttime" id="starttime" class="form-control form-control-sm rounded-0" />
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="endtime">End Time<span class="text-danger">*</span></label>
-                                    @error('endtime')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
+                                    <label for="endtime">End Time<span class="text-danger">*</span></label>                                    
                                     <input type="time" name="endtime" id="endtime" class="form-control form-control-sm rounded-0" />
                                 </div>
 
@@ -80,19 +68,13 @@
                             <div class="row">
 
                                 <div class="col-md-12 form-group mb-3">
-                                    <label for="title">Title<span class="text-danger">*</span></label>
-                                    @error('title')
-                                            <span class="text-danger">{{$message}}</span>
-                                    @enderror
+                                    <label for="title">Title<span class="text-danger">*</span></label>                                    
                                     <input type="text" name="title" id="title" class="form-control form-control-sm rounded-0" placeholder="Enter Post title" value="{{old('title')}}"/>
 
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="type_id">Type<span class="text-danger">*</span></label>
-                                        @error('type_id')
-                                            <span class="text-danger">{{$message}}</span>
-                                        @enderror
+                                    <label for="type_id">Type<span class="text-danger">*</span></label>                                       
                                     <select name="type_id" id="type_id" class="form-select form-select-sm rounded-0">
                                        
                                         @foreach($types as $type)
@@ -102,18 +84,12 @@
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="fee">Fee<span class="text-danger">*</span></label>
-                                        @error('fee')
-                                            <span class="text-danger">{{$message}}</span>
-                                        @enderror
+                                    <label for="fee">Fee<span class="text-danger">*</span></label>                                        
                                     <input type="number" id="fee" name="fee" class="form-control form-control-sm rounded-0" placeholder="Class fee..." value="{{ old('fee') }}"/>
                                 </div>
 
                                 <div class="col-md-12 form-group mb-3">
-                                    <label for="content">Content<span class="text-danger">*</span></label>
-                                        @error('content')
-                                            <span class="text-danger">{{$message}}</span>
-                                        @enderror
+                                    <label for="content">Content<span class="text-danger">*</span></label>                                        
                                     <textarea name="content" id="content" class="form-control form-control-sm rounded-0" rows="5" aria-placeholder="Say Something...">{{old('content')}}</textarea>
                                 </div>
 
@@ -123,10 +99,7 @@
                                          @foreach($tags as $tag)
                                               <option value="{{$tag->id}}" {{ old('tag_id') == $tag->id ? 'selected' : '' }}>{{ $tag->name }}</option>
                                          @endforeach
-                                    </select>
-                                    @error("tag_id")
-                                         <span class="text-danger">{{ $message }}<span>
-                                    @enderror
+                                    </select>                                    
                                </div>
 
                                <div class="col-md-3">
@@ -135,10 +108,7 @@
                                          @foreach($attshows as $attshow)
                                               <option value="{{$attshow->id}}" {{ old('attshow') == $attshow->id ? 'selected' : '' }}>{{ $attshow->name }}</option>
                                          @endforeach
-                                    </select>
-                                    @error("attshow")
-                                         <span class="text-danger">{{ $message }}<span>
-                                    @enderror
+                                    </select>                                    
                                </div>
 
                                <div class="col-md-3">
@@ -147,10 +117,7 @@
                                          @foreach($statuses as $status)
                                               <option value="{{$status->id}}" {{ old('status_id') == $status->id ? 'selected' : '' }}>{{ $status->name }}</option>
                                          @endforeach
-                                    </select>
-                                    @error("status_id")
-                                         <span class="text-danger">{{ $message }}<span>
-                                    @enderror
+                                    </select>                                    
                                </div>                               
 
                                <div class="col-md-3 d-flex justify-content-end align-items-end">

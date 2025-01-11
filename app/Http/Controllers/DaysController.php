@@ -78,7 +78,7 @@ class DaysController extends Controller
         $days = Day::findOrFail($id);
         $days->delete();
 
-        session()->flash("danger", "Delete Successfully"); 
+        session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
     }
 }

@@ -44,8 +44,7 @@ class LeavesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LeaveRequest $request)
-    {
+    public function store(LeaveRequest $request)    {
 
         $user = Auth::user();
         $user_id = $user->id;
@@ -102,7 +101,7 @@ class LeavesController extends Controller
         $leave = Leave::findOrFail($id);
         $leavefiles = LeaveFile::where("leave_id",$id)->get(); // load all associated images
         $users = User::pluck('name','id');
-        $stages = Stages::whereIn('id',[1,2,3])->where('status_id', 3)->get();
+        $stages = Stages::whereIn('id',[1,2,4])->where('status_id', 3)->get();
         $allleaves = Leave::where('user_id', $leave->user_id)->orderBy('created_at', 'desc')->get();
        
         return view('leaves.show',["leave"=>$leave,"leavefiles"=>$leavefiles, "users"=>$users, "stages"=>$stages, "allleaves"=>$allleaves]);
@@ -139,52 +138,46 @@ class LeavesController extends Controller
         $leave->content = $request['content'];
 
         if($leave->isconverted()){
-            return redirect()->back()->with('error', "Already been converted to an authorize stage. Editing is disabled.");
+            return redirect()->back()->with('info', "Already been converted to an authorize stage. Editing is disabled.");
         }
 
         $leave->save();
-
-        $leavefiles = LeaveFile::where('leave_id',$leave->id)->get();
-
-        // Delete associated records from the database
-        LeaveFile::where('leave_id',$leave->id)->delete();
-       
         if($request->hasFile('images')){
 
-            // Remove Old Multi Upload
-             
+            $leavefiles = LeaveFile::where('leave_id',$leave->id)->get();
+
+            // Delete associated records from the database
             foreach($leavefiles as $leavefile){
 
                 $path = $leavefile->image;
 
                 if(File::exists($path)){
-
-                    FIle::delete($path);
-
+                    File::delete($path);
                 }
-            }          
-            
-        } 
 
-      
-        // Multi Images Upload 
-        foreach($request->file('images') as $image){
+            }
 
-            $leavefile = new Leave();
-            $leavefile->leave_id = $leave->id;
-              
-            $file = $image;
-            // dd($file);
-            $fname = $file->getClientOriginalName();
-                // dd($fname);
-            $imagenewname = uniqid($user_id).$leave['id'].$fname;
-                // dd($imagenewname);
-            $file->move(public_path('assets/img/leaves/'),$imagenewname);
-    
-            $filepath = 'assets/img/leaves/'.$imagenewname;
-            $leavefile->image = $filepath;
-               
-            $leavefile->save();
+            // Delete associated records from the database
+            LeaveFile::where('leave_id',$leave->id)->delete();
+
+
+            // Multi Images Upload 
+
+            foreach($request->file('images') as $image){
+
+                $leavefile = new LeaveFile(); 
+                $leavefile->leave_id = $leave->id;
+
+                $file = $image;
+                $fname = $file->getClientOriginalName();
+                $imagenewname = uniqid($user_id).$leave['id'].$fname;
+                $file->move(public_path('assets/img/leaves/'),$imagenewname);
+
+                $filepath = 'assets/img/leaves/'.$imagenewname;
+                $leavefile->image = $filepath;
+
+                $leavefile->save();
+            }
         }
 
         session()->flash("success", "Update Successfully");
@@ -209,9 +202,7 @@ class LeavesController extends Controller
             $path = $leavefile->image;
 
             if(File::exists($path)){
-
                 FIle::delete($path);
-
             }
         }     
         // Delete associated records from the database
@@ -219,7 +210,7 @@ class LeavesController extends Controller
 
         $leave->delete();
 
-        session()->flash("danger", "Delete Successfully");
+        session()->flash("error", "Delete Successfully");
         return redirect()->back();
     }
 

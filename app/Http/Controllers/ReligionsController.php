@@ -79,7 +79,7 @@ class ReligionsController extends Controller
         $religions = Religion::findOrFail($id);
         $religions->delete();
 
-        session()->flash("danger", "Delete Successfully"); 
+        session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
     }
 }
