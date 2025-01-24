@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AnnouncementsController;
 use App\Http\Controllers\LeavesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
@@ -36,6 +36,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('/announcements', AnnouncementsController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -56,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/leaves/{id}/updatestage',[LeavesController::class, 'updatestage'])->name('leaves.updatestage');
 
     Route::resource('/tags', TagsController::class); 
+
+    
 
 });
  
