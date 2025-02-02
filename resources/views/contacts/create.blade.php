@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{ route('announcements.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('contacts.store') }}" method="POST" enctype="multipart/form-data">
                     
                     {{ csrf_field() }}
 
@@ -14,15 +14,23 @@
 
                         <div class="col-md-4">
 
-                            <div class="row">
-                                
-                                <div class="col-md-12 form-group mb-3">
+                            <div class="row">                            
+                               
 
-                                    <label for="image" class="gallery">                                  
-                                        <span>Choose Image</span>
-                                    </label>
-                                    <input type="file" name="image" id="image" class="form-control form-control-sm rounded-0" multiple hidden/>
-                                </div>                           
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="firstname">First Name<span class="text-danger">*</span></label>                                
+                                    <input type="text" name="firstname" id="firstname" class="form-control form-control-sm rounded-0" placeholder="Enter firstname..."/>
+                                </div>
+
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="lastname">Last Name<span class="text-danger">*</span></label>                                
+                                    <input type="text" name="lastname" id="lastname" class="form-control form-control-sm rounded-0" placeholder="Enter lastname..."/>
+                                </div>
+
+                                <div class="col-md-12 form-group mb-3">
+                                    <label for="title">Birthday<span class="text-danger">*</span></label>                                    
+                                    <input type="date" name="birthday" id="birthday" class="form-control form-control-sm rounded-0"/>
+                                </div>
 
                             </div>
                             
@@ -30,32 +38,30 @@
 
                         <div class="col-md-8">
 
-                            <div class="row">
+                            <div class="row">                                
 
-                                <div class="col-md-12 form-group mb-3">
-                                    <label for="title">Title<span class="text-danger">*</span></label>                                    
-                                    <input type="text" name="title" id="title" class="form-control form-control-sm rounded-0" placeholder="Enter title" value="{{old('title')}}"/>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="gender_id">Class<span class="text-danger">*</span></label>                                        
+                                    <select name="gender_id" id="gender_id" class="form-select form-select-sm rounded-0">
+                                        <option selected disabled>Choose Gender</option>
+                                        @foreach($genders as $gender)
+                                            <option value="{{$gender['id']}}">{{$gender->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="post_id">Class<span class="text-danger">*</span></label>                                  
-                                    
-                                    <select name="post_id[]" id="post_id" class="form-control form-control-sm rounded-0">
-                                        <option value="" selected disabled>Choose Class</option>
-                                        @foreach($posts as $id=>$title)
-                                             <option value="{{$id}}">{{ $title }}</option>
+                                    <label for="relative_id">Relative<span class="text-danger">*</span></label>                                        
+                                    <select name="relative_id" id="relative_id" class="form-select form-select-sm rounded-0">
+                                        <option selected disabled>Choose Relative</option>
+                                        @foreach($relatives as $relative)
+                                            <option value="{{$relative['id']}}">{{$relative['name']}}</option>
                                         @endforeach
-                                   </select>
-                                </div>
-
-                                <div class="col-md-12 form-group mb-3">
-                                    <label for="content">Content<span class="text-danger">*</span></label>                                   
-                                    <textarea  name="content" id="content" class="form-control form-control-sm rounded-0" rows="5" placeholder="Say Something..."> </textarea> 
-
-                                </div>
-                            
+                                    </select>
+                                </div>                                     
+                                
                                 <div class="col-md-12 d-flex justify-content-end">
-                                    <a href="{{route('announcements.index')}}" class="btn btn-secondary btn-sm rounded-0">Cancel</a>
+                                    <a href="{{route('contacts.index')}}" class="btn btn-secondary btn-sm rounded-0">Cancel</a>
                                     <button type="submit" class="btn btn-primary btn-sm rounded-0 ms-3">Submit</button>
                                 </div>
 
@@ -77,13 +83,14 @@
 
 @section('css')
 {{-- link select 2 css --}}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{asset('assets\libs\select2-develop\dist\css\select2.min.css')}}" />
 
 {{-- link summer note css --}}
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{asset('assets\libs\summernote-0.8.18-dist\summernote.min.css')}}" />
 
 {{-- flatpickr css  --}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="{{asset('assets\libs\flatpickr\flatpickr.min.css')}}" />
+
 
 {{-- Start Gallery  --}}
 <style type="text/css">
@@ -122,14 +129,15 @@
 
 
 @section('scripts')
+
 {{-- flatpickr js  --}}
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{{asset('assets\libs\flatpickr\flatpickr.min.js')}}"></script>
 
 {{-- link select 2 js --}}
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{asset('assets\libs\select2-develop\dist\js\select2.min.js')}}"></script>
 
 {{-- link summer note js --}}
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+<script src="{{asset('assets\libs\summernote-0.8.18-dist\summernote.min.js')}}"></script>
 
     <script type="text/javascript">
 
@@ -203,7 +211,7 @@
 
         }
 
-        $("#image").change(function(){
+        $("#images").change(function(){
 
             Previewimages(this,"label.gallery");
         });

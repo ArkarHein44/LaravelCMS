@@ -37,8 +37,8 @@
 
                                     <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks" data-bs-toggle="collapse" data-bs-target="#article"><i class="fas fa-tachometer-alt fa-md me-3"></i> Articles <i class="fas fa-angle-left mores"></i></a>
                                         <ul id="article" class="collapse">
-                                            <li><a href="{{Route(name: 'posts.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Posts</a></li>
-                                            <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Accouncement</a></li>
+                                            <li><a href="{{route(name: 'posts.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Posts</a></li>
+                                            <li><a href="{{route(name:'announcements.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Announcement</a></li>
                                         </ul>
                                     </li>
 
@@ -54,7 +54,7 @@
                                         <a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks" data-bs-toggle="collapse" data-bs-target="#apps"><i class="fas fa-tachometer-alt fa-md me-3"></i> Apps <i class="fas fa-angle-left mores"></i></a>
 
                                             <ul id="apps" class="collapse">
-                                                <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Contacts</a></li>
+                                                <li><a href="{{route(name:'contacts.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Contacts</a></li>
                                                 <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Todo</a></li>
                                             </ul>
                                     </li>
@@ -79,6 +79,8 @@
                                             <li><a href="{{Route('types.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Types</a></li>
 
                                             <li><a href="{{Route('statuses.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Statuses</a></li>
+
+                                            <li><a href="{{Route('relatives.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i> Relative</a></li>
                                             
                                         </ul>
 

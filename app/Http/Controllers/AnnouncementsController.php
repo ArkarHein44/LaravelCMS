@@ -43,7 +43,7 @@ class AnnouncementsController extends Controller
         $announcement = new Announcement();
         $announcement->title = $request['title'];
         $announcement->content = $request['content'];
-        $announcement->post_id = $request['post_id'];
+        $announcement->post_id = json_encode($request['post_id']);
         $announcement->user_id = $user_id;
 
         // Single Image Upload
