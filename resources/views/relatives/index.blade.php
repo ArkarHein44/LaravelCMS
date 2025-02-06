@@ -86,9 +86,13 @@
                                     <input type="checkbox" name="singlechecks" class="form-check-input singlechecks" value="{{$relative->id}}" />
                                 </td>
                                 <td>{{ ++$idx }}</td>
-                                <td><a href="{{route('relatives.show',$relative->id)}}">{{$relative->name}}</a></td>                                                             
+                                <td>{{$relative->name}}</td>                                                             
                                 <td>{{ $relative['user']['name'] }}</td>
-                                <td>{{ $relative['status']['name'] }}</td>
+                                {{-- <td>{{ $relative['status']['name'] }}</td> --}}
+                                <td>
+                                    <i class="fas fa-toggle-{{$relative->status->slug}} fa-2x text-primary"></i>
+                                </td>
+
                                 <td>{{ $relative->created_at->format("d M Y") }}</td>
                                 <td>{{ $relative->updated_at->format("d M Y ") }}</td>
                                 <td>

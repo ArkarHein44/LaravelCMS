@@ -51,7 +51,7 @@ class RelativesController extends Controller
 
         $genders->save();
 
-        session()->flash("success", "New Gender Created");
+        session()->flash("success", "New Relative Created");
         return redirect(route('relatives.index'));
     }
 

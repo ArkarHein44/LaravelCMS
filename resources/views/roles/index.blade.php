@@ -45,7 +45,7 @@
                                 <input type="checkbox" name="selectalls" id="selectalls" class="form-check-input selectalls" />
                             </th>
                             <th>No</th>
-                            <th>Gender</th>
+                            <th>Name</th>
                             <th>Staus</th>
                             <th>By</th>
                             <th>Created At</th>
@@ -61,7 +61,7 @@
                                 </td>
                                 <td>{{ ++$idx }}</td>
                                 <td><img src="{{asset($role->image)}}" alt="" class="rounded-circle me-2" width="20px" height="20px" /><a href="{{route('roles.show',$role->id)}}">{{$role->name}}</a></td>
-                                <td>{{ $role->name }}</td>
+                                {{-- <td>{{ $role->name }}</td> --}}
                                 <td>{{ $role->status->name }}</td>                               
                                 <td>{{ $role['user']['name'] }}</td>
                                 <td>{{ $role->created_at->format("d M Y") }}</td>

@@ -65,6 +65,7 @@ var gaugeinvs = new JustGage({
     decimals: 2,
     gaugeWidthScale: 0.6
 });
+
 // update the value randomly
 setInterval(() => {
     gaugeurs.refresh(Math.random() * 100);

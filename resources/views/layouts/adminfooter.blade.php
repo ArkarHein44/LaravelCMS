@@ -51,7 +51,7 @@
 
         
         {{-- bootstrap css1 js1   --}}
-        <script src="{{asset('/assets/libs/bootstrap-5.3.3-dist/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('assets/libs/bootstrap-5.3.3-dist/js/bootstrap.min.js')}}"></script>
         
         {{-- jquery js js1 --}}
         <script src="{{asset('assets/libs/jquery-3.7.1.min.js')}}"></script>

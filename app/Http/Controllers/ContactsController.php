@@ -23,8 +23,8 @@ class ContactsController extends Controller
     public function index()
     {
         $contacts = Contact::all();
-        $genders = Gender::all();
-        $relatives = Relative::all();
+        $genders = Gender::orderBy("name","asc")->pluck("name","id");
+        $relatives = Relative::orderBy("name","asc")->pluck("name","id");
         $users = User::all();
 
         return view('contacts.index', compact('contacts', 'genders', 'relatives', 'users'));
@@ -49,10 +49,10 @@ class ContactsController extends Controller
     {
         $this->validate($request,[
             'firstname'=>'required|max:50',
-            'lastname'=>'required|max:50',
-            'birthday'=>'required|date',            
-            'gender_id'=>'exists:genders,id',
-            'relative_id'=>'exists:relatives,id',            
+            'lastname'=>'nullable|string|max:50',
+            'birthday'=>'nullable|date|before:today',            
+            'gender_id'=>'nullable|exists:genders,id',
+            'relative_id'=>'nullable|exists:relatives,id',            
         ]);
 
         $user = Auth::user();
@@ -95,7 +95,7 @@ class ContactsController extends Controller
         $users = User::pluck('name','id');
         $genders = Gender::pluck('name','id');
         $relatives = Relative::pluck('name', 'id');
-    
+        
         return view('contacts.edit',[ "contact"=>$contact, "users"=>$users, "genders"=>$genders, "relatives"=>$relatives]);
     }
 
@@ -105,22 +105,22 @@ class ContactsController extends Controller
     public function update(Request $request, string $id)
     {
         $this->validate($request,[
-            'firstname'=>'required|max:50',
-            'lastname'=>'required|max:50',
-            'birthday'=>'required|date',            
-            'gender_id'=>'exists:genders,id',
-            'relative_id'=>'exists:relatives,id',            
+            'editfirstname'=>'required|max:50',
+            'editlastname'=>'nullable|string|max:50',
+            'editbirthday'=>'nullable|date|before:today',            
+            'editgender_id'=>'nullable|exists:genders,id',
+            'editrelative_id'=>'nullable|exists:relatives,id',            
         ]);
 
         $user = Auth::user();
         $user_id = $user->id;
         
         $contact = Contact::findOrFail($id);      
-        $contact->firstname = $request['firstname'];
-        $contact->lastname = $request['lastname'];
-        $contact->birthday = $request['birthday'];
-        $contact->gender_id = $request['gender_id'];
-        $contact->relative_id = $request['relative_id'];
+        $contact->firstname = $request['editfirstname'];
+        $contact->lastname = $request['editlastname'];
+        $contact->birthday = $request['editbirthday'];
+        $contact->gender_id = $request['editgender_id'];
+        $contact->relative_id = $request['editrelative_id'];
         $contact->user_id = $user_id;
 
         $contact->save();
