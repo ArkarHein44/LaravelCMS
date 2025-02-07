@@ -61,7 +61,7 @@
                                         <i class="fas fa-pen"></i>
                                     </a>
 
-                                    <a href="javascript:void(0);" class="text-danger ms-2 delete-btns" data-idx="{{$idx}}">
+                                    <a href="javascript:void(0);" class="text-danger ms-2 delete-btn" data-idx="{{$idx}}">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>                                    
                                 </td>
@@ -229,5 +229,28 @@
             });
 
         });
+
+        // Single Delete 
+        $(document).ready(function(){
+                $('.delete-btn').click(function(){
+                    const getidx = $(this).data('idx');
+                    // console.log(getidx);
+
+                    if(confirm(`Are you sure! you want to delete ${getidx}`)){
+                        $('#formdelete-'+getidx).submit();
+                        return true;
+                    }else{
+                        return false;
+                    }
+                });
+            });
+
+        // Single Delete
+
+        // Bulk Delete 
+        $('#selectalls').click(function(){
+            $('.singlechecks').prop('checked',$(this).prop('checked'));
+        })
+        // Bulk Delete 
     </script>
 @endsection

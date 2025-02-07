@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/categories', CategoriesController::class);
     Route::resource('/contacts', ContactsController::class);
+    Route::delete('/contactsbulkdeletes', [ContactsController::class,'bulkdeletes'])->name("contacts.bulkdeletes");
 
     Route::resource('/days', DaysController::class); 
 

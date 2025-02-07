@@ -55,7 +55,7 @@
                                 <select name="relative_id" id="relative_id" class="form-select form-select-sm rounded-0" >
                                     @foreach($relatives as $id=>$name)
                                         <option value="{{$id}}"
-                                            @if($id === $contact["relative_id"])
+                                            @if($id === $contact["relative_idn"])
                                                 selected
                                             @endif>{{ $name }}
                                         </option>     

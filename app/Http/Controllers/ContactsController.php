@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\LeaveTagPersonNotification;
+use App\Notifications\ContactEmailNotify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -12,6 +13,9 @@ use App\Models\Contact;
 use App\Models\Gender;
 use App\Models\Relative;
 use App\Models\User;
+
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 use Notification;
 
@@ -67,6 +71,17 @@ class ContactsController extends Controller
         $contact->user_id = $user_id;
 
         $contact->save();
+
+        // => Email Notification to created users
+        $contactdatas = [
+            "firstname"=> $contact->firstname,
+            "lastname"=> $contact->lastname,
+            "birthday"=> $contact->birthday,
+            "relative"=> $contact->relative['name'],
+            "url"=>url('/')
+        ];
+
+        Notification::send($user, new ContactEmailNotify($contactdatas));
 
         session()->flash("success", "New Contact Created");
 
@@ -139,5 +154,17 @@ class ContactsController extends Controller
 
         session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
+    }
+
+    public function bulkdeletes(Request $request){
+        try{
+            $getselectedids = $request->selectedids;
+            Contact::whereIn('id', $getselectedids)->delete();
+
+            return Response::json(["success"=>"Selected data have been successfully"]);
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return Response::json(["status"=>"Failed", "message"=>$e->getMessage()]);
+        }
     }
 }
