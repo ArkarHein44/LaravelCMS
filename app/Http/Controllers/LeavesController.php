@@ -16,6 +16,9 @@ use App\Models\stages;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\LeaveRequest;
 
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
+
 use Notification;
 
 class LeavesController extends Controller
@@ -224,6 +227,19 @@ class LeavesController extends Controller
         session()->flash("info", "Changed Stage");
         return redirect()->back();
     }
+
+    public function bulkdeletes(Request $request){
+        try{
+            $getselectedids = $request->selectedids;
+            Leave::whereIn('id', $getselectedids)->delete();
+
+            return Response::json(["success"=>"Selected data have been successfully"]);
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return Response::json(["status"=>"Failed", "message"=>$e->getMessage()]);
+        }
+    }
+
 }
 
 // HW 

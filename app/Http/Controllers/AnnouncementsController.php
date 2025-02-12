@@ -12,6 +12,9 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
+
 class AnnouncementsController extends Controller
 {
     public function index()
@@ -150,5 +153,17 @@ class AnnouncementsController extends Controller
         session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
 
+    }
+    
+    public function bulkdeletes(Request $request){
+        try{
+            $getselectedids = $request->selectedids;
+            Announcement::whereIn('id', $getselectedids)->delete();
+
+            return Response::json(["success"=>"Selected data have been successfully"]);
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return Response::json(["status"=>"Failed", "message"=>$e->getMessage()]);
+        }
     }
 }

@@ -7,6 +7,9 @@ use App\Models\Tags;
 use App\Models\Status;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
+
 class TagsController extends Controller
 {
     /**
@@ -104,5 +107,17 @@ class TagsController extends Controller
 
         session()->flash("error", "Delete Successfully"); 
         return redirect()->back();
+    }
+
+    public function bulkdeletes(Request $request){
+        try{
+            $getselectedids = $request->selectedids;
+            Tags::whereIn('id', $getselectedids)->delete();
+
+            return Response::json(["success"=>"Selected data have been successfully"]);
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return Response::json(["status"=>"Failed", "message"=>$e->getMessage()]);
+        }
     }
 }
